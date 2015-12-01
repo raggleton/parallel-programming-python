@@ -54,17 +54,18 @@ def reduce_dicts( dict1, dict2 ):
 
     return combined
 
-# need to call it using python countwords.py ../shakespeare/*
-files = sys.argv[1:]
-with contextlib.closing(Pool()) as pool:
-    word_counters = pool.map(count_words, files)
+if __name__ == "__main__":
+    # need to call it using python countwords.py ../shakespeare/*
+    files = sys.argv[1:]
+    with contextlib.closing(Pool()) as pool:
+        word_counters = pool.map(count_words, files)
 
-total_dict = reduce(reduce_dicts, word_counters)
-words = sorted([k for k, v in total_dict.iteritems() if v > 2000])
+    total_dict = reduce(reduce_dicts, word_counters)
+    words = sorted([k for k, v in total_dict.iteritems() if v > 2000])
 
-def print_line(word, count):
-    print word, ' = ', count
+    def print_line(word, count):
+        print word, ' = ', count
 
-map(print_line, words, [total_dict[x] for x in words])
+    map(print_line, words, [total_dict[x] for x in words])
 
-# use Counter here?
+    # use Counter here?
